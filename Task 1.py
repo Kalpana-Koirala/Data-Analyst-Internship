@@ -30,8 +30,7 @@ data = [
     ["Unit_Price", "Price per single unit of the product", "Numeric (Continuous)",
      "Used to analyze pricing strategy and profitability"],
     ["Total_Sales", "Total revenue generated from the order (Quantity x Unit_Price)", "Numeric (Continuous)",
-     "Key metric for measuring revenue, sales performance, and business growth"],
-]
+     "Key metric for measuring revenue, sales performance, and business growth"],]
 for row in data:
     ws.append(row)
 wb.save("data_dictionary.xlsx")
@@ -80,17 +79,16 @@ for col in numeric_columns:
 city_to_region = {
     "Mumbai": "West", "Pune": "West","Delhi": "North","Bengaluru": "South",
     "Hyderabad": "South","Kolkata": "East", "Patna" : "East", "Gaya": "East"}
-
 if 'City' in df.columns:
     df['Region'] = df['City'].map(city_to_region).fillna("Other")
 dob_column = df.pop('Region')
 df.insert(7, 'Region', dob_column)
 
 from datetime import datetime
-import pandas as pd
 df['Order_Date'] = pd.to_datetime(df['Order_Date'], format='mixed', dayfirst=True)
 df['Date of Birth'] = df.apply(
     lambda row: (row['Order_Date'] - pd.DateOffset(years=int(row['Age']))).date(),axis=1)
+df['Order_Date'] = df['Order_Date'].dt.strftime('%d-%m-%Y')
 dob_column = df.pop('Date of Birth')
 df.insert(4, 'Date of Birth', dob_column)
 
