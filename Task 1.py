@@ -1,5 +1,3 @@
-from datetime import date
-import datetime
 import openpyxl as pxl
 from openpyxl import Workbook
 wb = Workbook()
@@ -55,10 +53,6 @@ print(" Duplicate Rows ")
 print(df.duplicated().sum())
 duplicates = df[df.duplicated()]
 print(duplicates)
-
-df['Order_Date'] = pd.to_datetime(df['Order_Date'], format='mixed', dayfirst=True).dt.normalize()
-df['Order_Date'] = df['Order_Date'].dt.strftime('%d-%m-%Y')
-print(df['Order_Date'])
 
 text_columns = df.select_dtypes(include="object").columns
 for col in text_columns:
